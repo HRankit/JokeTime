@@ -34,7 +34,8 @@
         android:padding="10dp"
         android:text="@string/button_text"
         android:textColor="@android:color/white"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        tools:ignore="OnClick" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
@@ -44,5 +45,14 @@
         android:layout_centerHorizontal="true"
         ads:adSize="BANNER"
         ads:adUnitId="@string/banner_ad_unit_id" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background = "@xml/progress"
+        android:layout_centerInParent="true"
+        android:indeterminate="true" />
 
 </RelativeLayout>
