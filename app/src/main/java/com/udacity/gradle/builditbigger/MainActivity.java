@@ -1,9 +1,13 @@
 package com.udacity.gradle.builditbigger;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,8 +15,15 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.extensions.android.json.AndroidJsonFactory;
+import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
+import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
+import com.udacity.gradle.builditbigger.backend.myApi.MyApi;
 import com.udacity.jokeactivity.JokeActivity;
 import com.udacity.jokeprovider.ProvideJokes;
+
+import java.io.IOException;
 
 import static com.udacity.jokeactivity.JokeActivity.JOKE_KEY;
 
@@ -49,15 +60,48 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
-        ProvideJokes pjs = new ProvideJokes();
-        String joke = pjs.getJoke();
+        new EndpointsAsyncTask().execute();
+    }
 
-        Intent i = new Intent(this, JokeActivity.class);
-        i.putExtra(JOKE_KEY, joke);
+    public class EndpointsAsyncTask extends AsyncTask<String, Void, String> {
+        private MyApi myApiService = null;
+
+
+        @Override
+        protected String doInBackground(String... strings) {
+            if(myApiService == null) {
+                MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
+                        new AndroidJsonFactory(), null)
+                        .setRootUrl("http://10.0.2.2:8080/_ah/api/")
+                        .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                            @Override
+                            public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                                abstractGoogleClientRequest.setDisableGZipContent(true);
+                            }
+                        });
+                myApiService = builder.build();
+            }
+
+
+            try {
+                return myApiService.getJoke().execute().getData();
+            } catch (IOException e) {
+                return e.getMessage();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            startJokeActivity(result);
+//            showCustomToast(result);
+        }
+    }
+
+    private void startJokeActivity(String result) {
+        Intent i = new Intent (MainActivity.this, JokeActivity.class);
+        i.putExtra(JOKE_KEY, result);
         startActivity(i);
-
-//        showCustomToast(joke);
-
     }
 
     private void showCustomToast(String joke) {
@@ -71,6 +115,5 @@ public class MainActivity extends AppCompatActivity {
         toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, 0);
         toast.show();
     }
-
 
 }
