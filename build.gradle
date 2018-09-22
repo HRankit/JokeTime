@@ -20,3 +20,13 @@ allprojects {
         google()
     }
 }
+
+
+task optionalTestTask(dependsOn: [":backend:appengineStart",
+                                  ":app:assembleFreeDebug",
+                                  ":app:assembleFreeDebugAndroidTest",
+                                  ':backend:appengineStop']) {
+    doLast {
+        println 'OptionalTestTask Ran Successfully.'
+    }
+}

@@ -1,6 +1,5 @@
 package com.udacity.gradle.builditbigger;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -15,8 +14,6 @@ import android.widget.Toast;
 
 import com.udacity.jokeactivity.JokeActivity;
 
-import java.lang.ref.WeakReference;
-
 import static com.udacity.jokeactivity.JokeActivity.JOKE_KEY;
 
 
@@ -30,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mProgressBar = findViewById(R.id.progressBar);
+        mProgressBar.setVisibility(View.GONE);
     }
 
 

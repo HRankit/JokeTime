@@ -35,7 +35,7 @@ class EndPointAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        if (mProgressBar != null) {
+        if (mProgressBar.get() != null) {
             mProgressBar.get().setVisibility(View.VISIBLE);
         }
     }
@@ -48,7 +48,7 @@ class EndPointAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
                 .setRootUrl("http://10.0.2.2:8080/_ah/api/")
                 .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                     @Override
-                    public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                    public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) {
                         abstractGoogleClientRequest.setDisableGZipContent(true);
                     }
                 });
@@ -72,7 +72,7 @@ class EndPointAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
         }
 
 
-        if (mProgressBar != null) {
+        if (mProgressBar.get() != null) {
             mProgressBar.get().setVisibility(View.GONE);
         }
         if (result != null && result.length() > 0) {
@@ -82,6 +82,8 @@ class EndPointAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
     }
 
     private void startJokeDisplayActivity() {
+
+
         Intent intent = new Intent(mContext.get(), JokeActivity.class);
         intent.putExtra(JOKE_KEY, mResult);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
