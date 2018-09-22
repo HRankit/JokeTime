@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="textHeadline">#6a1b9a</color>
+    <color name="textSubHeadline">#7a4e94</color>
+    <color name="textButton">#4a148c</color>
+    <color name="buttonBackground">#ea80fc</color>
+    <color name="background">#efebe9</color>
+    <color name="toastBackground">#101010</color>
+
+
+</resources>
