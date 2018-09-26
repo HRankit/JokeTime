@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class ProvideJokes {
 
-    private String[] title = {
+    private final String[] title = {
             "What’s the best thing about Switzerland?\n\n\nI don’t know, but the flag is a big plus.",
             "This is a Joke. Laugh!!! \uD83E\uDD23",
             "I invented a new word!\n\n\nPlagiarism!",
@@ -132,7 +132,7 @@ public class ProvideJokes {
 
     };
 
-    private List<String> list = Arrays.asList(title);
+    private final List<String> list = Arrays.asList(title);
 
     public String getJoke() {
         int number = getRandomNumber(list.size() - 1);

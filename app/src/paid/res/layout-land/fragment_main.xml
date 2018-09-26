@@ -1,0 +1,75 @@
+    <!--suppress XmlUnboundNsPrefix, XmlHighlighting -->
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="20dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context=".MainActivityFragment">
+
+
+        <TextView
+            android:id="@+id/instructions_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="@string/instructions"
+            android:textColor="@color/textHeadline"
+            android:textSize="18sp" />
+
+
+        <ImageView
+            android:id="@+id/drawingImageView"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_below="@+id/instructions_text_view"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/ic_blank_face" />
+
+        <RelativeLayout
+            android:id="@+id/rl"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/drawingImageView"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_rounded">
+
+            <TextView
+                android:id="@+id/information_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="sans-serif-smallcaps"
+                android:gravity="center_horizontal"
+
+                android:text="@string/swipe_to_get_a_joke"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="10dp"
+                android:contentDescription="Lock Button"
+                android:src="@mipmap/ic_rofl" />
+        </RelativeLayout>
+
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@xml/progress"
+            android:indeterminate="true" />
+
+    </RelativeLayout>

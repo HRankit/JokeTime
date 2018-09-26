@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 public class JokeActivity extends AppCompatActivity {
 
-    public static String JOKE_KEY = "joke";
+    public static final String JOKE_KEY = "joke";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +21,13 @@ public class JokeActivity extends AppCompatActivity {
         if (getIntent() != null){
             jokeDisplay_tv.setText(getIntent().getStringExtra(JOKE_KEY));
         }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
     }
 }
