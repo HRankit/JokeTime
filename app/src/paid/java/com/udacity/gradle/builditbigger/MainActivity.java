@@ -9,12 +9,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -24,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.udacity.jokeactivity.JokeActivity;
 
@@ -135,7 +132,6 @@ public class MainActivity extends AppCompatActivity implements EndPointAsyncTask
         paint.setStyle(Paint.Style.STROKE);
         return paint;
     }
-
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -285,16 +281,5 @@ public class MainActivity extends AppCompatActivity implements EndPointAsyncTask
 
     }
 
-    private void showCustomToast(String joke) {
-        Toast toast = Toast.makeText(this, joke, Toast.LENGTH_LONG);
-        View v = toast.getView();
-        v.getBackground().setColorFilter(getResources().getColor(R.color.toastBackground), PorterDuff.Mode.SRC_IN);
-        TextView text = v.findViewById(android.R.id.message);
-        text.setTextColor(getResources().getColor(R.color.background));
-        text.setTextSize(38);
-        text.setGravity(Gravity.CENTER_HORIZONTAL);
-        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, 0);
-        toast.show();
-    }
 
 }
