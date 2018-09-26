@@ -29,6 +29,7 @@
             android:layout_height="150dp"
             android:layout_below="@+id/instructions_text_view"
             android:layout_centerHorizontal="true"
+            android:contentDescription="@string/blank_face_emoji"
             android:src="@mipmap/ic_blank_face" />
 
         <RelativeLayout
@@ -58,7 +59,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
                 android:layout_marginStart="10dp"
-                android:contentDescription="Lock Button"
+                android:contentDescription="@string/lock_button"
                 android:src="@mipmap/ic_rofl" />
         </RelativeLayout>
 

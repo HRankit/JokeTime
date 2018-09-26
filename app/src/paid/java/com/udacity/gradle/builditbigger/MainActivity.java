@@ -14,7 +14,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,9 +40,9 @@ public class MainActivity extends AppCompatActivity implements EndPointAsyncTask
     private Bitmap myBitmap;
     private ImageView drawingImageView;
     private float smileGradient;
-    private String SMILE_GRADIENT = "smila_gradient";
-    private String BUTTON_POSITION = "button_position";
-    private float SLIDING_BUTTON_POSITION = 45;
+    private final String SMILE_GRADIENT = "smila_gradient";
+    private final String BUTTON_POSITION = "button_position";
+    private final float SLIDING_BUTTON_POSITION = 45;
 
 
     @Override
@@ -253,7 +252,7 @@ public class MainActivity extends AppCompatActivity implements EndPointAsyncTask
         return super.onOptionsItemSelected(item);
     }
 
-    public void tellJoke() {
+    private void tellJoke() {
         //noinspection unchecked
         goAsync();
     }
