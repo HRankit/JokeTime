@@ -11,10 +11,11 @@ import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 import com.udacity.gradle.builditbigger.backend.myApi.MyApi;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 
 class EndPointAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
 
-    private final AsyncResponse delegate;
+    private final WeakReference<AsyncResponse> delegate;
 
     public interface AsyncResponse {
         void processFinish(String output);
@@ -22,7 +23,7 @@ class EndPointAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
 
 
     EndPointAsyncTask(AsyncResponse s) {
-        delegate = s;
+        delegate = new WeakReference<>(s);
 
     }
 
@@ -59,7 +60,11 @@ class EndPointAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
 
 
         if (result != null && result.length() > 0) {
-            delegate.processFinish(result);
+            final AsyncResponse listener = delegate.get();
+            if (listener != null) {
+                listener.processFinish(result);
+            }
+//            delegate.processFinish(result);
         }
     }
 
