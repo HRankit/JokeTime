@@ -45,7 +45,7 @@ class EndPointAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
         try {
             return myApiService.getJoke().execute().getData();
         } catch (IOException e) {
-            return e.getMessage();
+            return null;
         }
     }
 
@@ -58,13 +58,17 @@ class EndPointAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
             e.printStackTrace();
         }
 
+        final AsyncResponse listener = delegate.get();
 
         if (result != null && result.length() > 0) {
-            final AsyncResponse listener = delegate.get();
             if (listener != null) {
                 listener.processFinish(result);
             }
 //            delegate.processFinish(result);
+        } else {
+            if (listener != null) {
+                listener.processFinish(null);
+            }
         }
     }
 

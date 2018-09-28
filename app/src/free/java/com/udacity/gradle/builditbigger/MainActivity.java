@@ -9,11 +9,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -23,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -96,9 +99,7 @@ public class MainActivity extends AppCompatActivity implements EndPointAsyncTask
     protected void onResume() {
         super.onResume();
 
-        TextView tv = findViewById(R.id.information_tv);
-        tv.setText(getResources().getString(R.string.default_rl_textview));
-        tv.setTextSize(20);
+        setDefaultSwipeTextView();
 
 
         initSwipe();
@@ -151,7 +152,6 @@ public class MainActivity extends AppCompatActivity implements EndPointAsyncTask
         paint.setStyle(Paint.Style.STROKE);
         return paint;
     }
-
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -344,7 +344,27 @@ public class MainActivity extends AppCompatActivity implements EndPointAsyncTask
 
     @Override
     public void processFinish(String output) {
-        startJokeDisplayActivity(output);
+        if (output != null) {
+            startJokeDisplayActivity(output);
+        } else {
+            errorOccured();
+        }
+    }
+
+    private void errorOccured() {
+        if (mProgressBar != null) {
+            mProgressBar.setVisibility(View.GONE);
+        }
+        showCustomToast(getResources().getString(R.string.toast_message));
+        moveButtonBack();
+        setDefaultSwipeTextView();
+    }
+
+    private void setDefaultSwipeTextView() {
+        TextView tv = findViewById(R.id.information_tv);
+        tv.setText(getResources().getString(R.string.default_rl_textview));
+
+        tv.setTextSize(20);
     }
 
     private void startJokeDisplayActivity(String mResult) {
@@ -352,15 +372,21 @@ public class MainActivity extends AppCompatActivity implements EndPointAsyncTask
             mProgressBar.setVisibility(View.GONE);
         }
 
-//        moveButtonBack();
-
-
         Intent intent = new Intent(this, JokeActivity.class);
         intent.putExtra(JOKE_KEY, mResult);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+    }
 
-
+    private void showCustomToast(String joke) {
+        Toast toast = Toast.makeText(this, joke, Toast.LENGTH_LONG);
+        View v = toast.getView();
+        v.getBackground().setColorFilter(getResources().getColor(R.color.toastBackground), PorterDuff.Mode.SRC_IN);
+        TextView text = v.findViewById(android.R.id.message);
+        text.setTextColor(getResources().getColor(R.color.background));
+        text.setTextSize(38);
+        text.setGravity(Gravity.CENTER_HORIZONTAL);
+        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.show();
     }
 }
